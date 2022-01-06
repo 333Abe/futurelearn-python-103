@@ -1,0 +1,60 @@
+#date validation
+from datetime import date
+#user should be prompted to enter a year, a month as a word, and a day of the month (1-31)
+
+dayInMonth = {
+                "january": 31, 
+                "february": 29, 
+                "march": 31, 
+                "april": 30, 
+                "may": 31, 
+                "june": 30, 
+                "july": 31, 
+                "august": 31, 
+                "september": 30, 
+                "october": 31, 
+                "november": 30, 
+                "december": 31
+            }
+
+def validateYear(year):
+    currentDate = str(date.today()).split("-")
+    thisYear = int(currentDate[0])
+    #print(thisYear)
+    validYear = False
+    while not validYear:
+        try:
+            year = int(year)
+            if year > 0 and year <= thisYear:
+                return year
+                validYear = True
+            else:
+                something = int("f") #not happy with this solution, as i am only adding this line to get the 'try' to fail.  i'd expected that the while loop would continue to run even if the 'try' works because the validYear variable still isn't true.
+        except ValueError:
+            year = input("please enter a year between 0AD and the current year > ")
+
+def validateMonth(month):
+    validMonth = False
+    while not validMonth:
+        if month.lower() in dayInMonth:
+            validMonth = True
+            return month
+        else:
+            month = input("input the month written in full > ")
+
+def validateDay(day):
+    validDay = False
+    day = int(day)
+    while not validDay:
+        if day > int(dayInMonth[whatMonth]) or day < 1:
+            day = input("There's not that many days in that month, try again > ")
+        else:
+            validDay = True
+            return day
+
+print("Tell me a date after zero AD and 31st December this year")
+whatYear = validateYear(input("enter a year > "))
+whatMonth = validateMonth(input("enter a month > "))
+whatDay = validateDay(input("enter the day > "))
+
+print("your date is formatted YYYY-MMMM-DD: " + str(whatYear) + "-" + str(whatMonth) + "-" + str(whatDay))
